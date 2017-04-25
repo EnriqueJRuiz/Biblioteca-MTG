@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+ 
+<tiles-definitions>  
+  
+   <!-- Base Definition -->
+   <definition name="my-template"
+       template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />  
+     <!--<put-attribute name="menu" value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />-->
+       <put-attribute name="mensaje" value="/WEB-INF/views/tiles/template/defaultMensaje.jsp" />      
+       <put-attribute name="body" value="" />  
+       <put-attribute name="footer" value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />  
+   </definition>  
+  
+   <!-- Home Page -->
+   <definition name="home" extends="my-template">  
+       <put-attribute name="title" value="Biblioteca - MTG" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/home.jsp" />  
+   </definition>  
+ 
+   <!-- login Page -->
+   <definition name="login" extends="my-template">  
+       <put-attribute name="title" value="login" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/login.jsp" />  
+   </definition>  
+       
+   <!-- Curso Pages -->
+   
+   <definition name="cartas" extends="my-template">  
+       <put-attribute name="title" value="listado de cartas" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/cartas/cartas.jsp" />  
+   </definition>  
+  
+    <definition name="contenidocarta" extends="my-template">  
+       <put-attribute name="title" value="formulario cursos" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/cartas/contenido.jsp" />  
+   </definition>  
+   
+     <definition name="carta" extends="my-template">  
+       <put-attribute name="title" value="detalle de cursos" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/cartas/carta.jsp" />  
+   </definition>  
+   
+   <!-- Color Pages -->
+   
+   <definition name="colores" extends="my-template">  
+       <put-attribute name="title" value="listado colores" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/colores/colores.jsp" />  
+   </definition>  
+  
+     <definition name="color" extends="my-template">  
+       <put-attribute name="title" value="formulario color" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/colores/color.jsp" />  
+   </definition>  
+   
+   <!-- Ampliacion Pages -->
+   
+   <definition name="ampliaciones" extends="my-template">  
+       <put-attribute name="title" value="listado de ampliaciones" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/ampliaciones/ampliaciones.jsp" />  
+   </definition>  
+  
+    <definition name="ampliacion" extends="my-template">  
+       <put-attribute name="title" value="formulario ampliacion" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/ampliaciones/ampliacion.jsp" />  
+   </definition>  
+   
+     <definition name="contenidoampliacion" extends="my-template">  
+       <put-attribute name="title" value="detalle de ampliacion" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/ampliaciones/contenido.jsp" />  
+   </definition>  
+   
+</tiles-definitions>

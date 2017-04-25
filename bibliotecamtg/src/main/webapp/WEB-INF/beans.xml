@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/jee
+     http://www.springframework.org/schema/jee/spring-jee.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="databaseProperties"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:/database/database.properties" />
+    </bean>
+	<bean name="mysqlDataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.user}"/>
+        <property name="password" value="${mysql.pass}"/>
+    </bean>
+  		
+  	
+  	<bean id="cartaDaoImp" class="com.ipartek.formacion.dbms.dao.CartaDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id="ampliacionDaoImp" class="com.ipartek.formacion.dbms.dao.AmpliacionDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id="colorDaoImp" class="com.ipartek.formacion.dbms.dao.ColorDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	
+		<property name="basenames" >
+			<list>
+				<value>messages/validationMessages</value>
+				<value>messages/viewtext</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+  </beans>

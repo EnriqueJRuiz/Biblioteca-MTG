@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security.xsd">
+    
+    
+    <http auto-config="true">
+        <intercept-url pattern="/" access="permitAll" />
+        <intercept-url pattern="/login.html" access="permitAll" />
+        <intercept-url pattern="/colores*" access="hasRole('ROLE_ADMIN')" />
+         <form-login  login-page="/login.html"
+             username-parameter="userId"
+             password-parameter="password"
+             authentication-failure-url="/Access_Denied"
+        />
+        <!-- 
+        <form-login login-page="/login.html"  default-target-url="/login" always-use-default-target="true" />
+        <logout logout-url="/logout"  invalidate-session="true" logout-success-url="/index.jsp" />
+         -->
+        <csrf disabled="true" />
+    </http>
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="admin" authorities="ROLE_ADMIN" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</b:beans>
