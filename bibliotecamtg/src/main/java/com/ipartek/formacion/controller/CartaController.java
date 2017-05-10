@@ -81,7 +81,7 @@ public class CartaController {
 	}
 	
 	@RequestMapping(value="/addCarta", method = RequestMethod.GET)
-	public ModelAndView addAlumno(Model model){
+	public ModelAndView addCarta(Model model){
 		model.addAttribute("carta", new Carta());
 		mav= new ModelAndView("carta");
 		List<Color> colores = coS.getAll();

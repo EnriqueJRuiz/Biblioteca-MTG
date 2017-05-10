@@ -34,7 +34,7 @@ public class AmpliacionRestController {
 	 		
 	}
 	
-	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET,produces =   MediaType.APPLICATION_JSON_VALUE)
   	public ResponseEntity<Ampliacion> getById(@PathVariable("codigo") int id) {
   		Ampliacion ampliacion = aS.getById(id);
  		ResponseEntity<Ampliacion> response = null;
@@ -88,7 +88,7 @@ public class AmpliacionRestController {
  		}
 		return response;
  	}
-	@RequestMapping(value = "/{codigo}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{codigo}", method = RequestMethod.POST,produces =MediaType.APPLICATION_JSON_VALUE,consumes =MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Ampliacion> update(@PathVariable("codigo") int id,@RequestBody Ampliacion ampliacion){
 		Ampliacion ampli = aS.getById(id);
 		ResponseEntity<Ampliacion> response = null;
@@ -104,10 +104,10 @@ public class AmpliacionRestController {
 	@RequestMapping( method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Void> create(@Valid @RequestBody Ampliacion alumno, UriComponentsBuilder ucBuilder){
+	public ResponseEntity<Void> create(@Valid @RequestBody Ampliacion ampliacion, UriComponentsBuilder ucBuilder){
 		ResponseEntity<Void> response=null;
 		try{
-			Ampliacion aux = aS.create(alumno);
+			Ampliacion aux = aS.create(ampliacion);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(ucBuilder.path("/api/ampliaciones/{codigo}").buildAndExpand(aux.getCodigo()).toUri());
 			response = new ResponseEntity<Void>(headers,HttpStatus.CREATED);
