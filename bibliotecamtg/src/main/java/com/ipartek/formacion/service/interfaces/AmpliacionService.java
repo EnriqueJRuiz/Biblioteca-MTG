@@ -18,7 +18,6 @@ public interface AmpliacionService {
 	
 	public List<Ampliacion> ampliacionPricipalGetAll();
 
-
 	public Ampliacion cartasGetById(int codigo);
 
 	public Ampliacion update(Ampliacion ampliacion);

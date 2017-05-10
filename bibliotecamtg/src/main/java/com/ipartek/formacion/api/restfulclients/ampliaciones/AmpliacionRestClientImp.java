@@ -1,5 +1,6 @@
 package com.ipartek.formacion.api.restfulclients.ampliaciones;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
@@ -38,4 +39,22 @@ public class AmpliacionRestClientImp implements AmpliacionRestClient{
 		template.delete(AmpliacionRestClient.URL + "/"+codigo);
 	}
 
+	@Override
+	public Ampliacion create(Ampliacion ampliacion) {
+		RestTemplate template = new RestTemplate();
+		template.postForLocation(AmpliacionRestClient.URL, ampliacion, Ampliacion.class);
+		
+		URI uri = template.postForLocation(AmpliacionRestClient.URL, ampliacion);
+		Ampliacion ampli = template.getForObject(uri, Ampliacion.class);
+		return ampli;
+	}
+
+	@Override
+	public Ampliacion update(Ampliacion ampliacion) {
+		RestTemplate template = new RestTemplate();
+		template.put(AmpliacionRestClient.URL + "/" + ampliacion.getCodigo(),ampliacion);
+		return ampliacion;
+	}
+
+	
 }

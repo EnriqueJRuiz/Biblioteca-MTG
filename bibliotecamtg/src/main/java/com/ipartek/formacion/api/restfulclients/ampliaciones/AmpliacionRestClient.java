@@ -15,4 +15,8 @@ final static String URL = "http://localhost:8080/gestiondocente/api/colores";
 	
 	public void delete(int codigo);
 	
+	public Ampliacion create(Ampliacion ampliacion);
+	
+	public Ampliacion update(Ampliacion ampliacion);
+	
 }
