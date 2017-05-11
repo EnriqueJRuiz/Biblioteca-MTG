@@ -48,7 +48,7 @@ public class AmpliacionRestController {
  		return response;
  	}
  
- 	@RequestMapping(method = RequestMethod.GET)
+ 	@RequestMapping(method = RequestMethod.GET,produces =   MediaType.APPLICATION_JSON_VALUE)
  	public ResponseEntity<List<Ampliacion>> getAll() {
  		List<Ampliacion> ampliaciones = aS.getAll();
  		ResponseEntity<List<Ampliacion>> response = null;
