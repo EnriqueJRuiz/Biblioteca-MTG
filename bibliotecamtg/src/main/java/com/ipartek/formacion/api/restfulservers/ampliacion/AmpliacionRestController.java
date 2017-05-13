@@ -34,7 +34,9 @@ public class AmpliacionRestController {
 	 		
 	}
 	
-	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET,produces =   MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{codigo}", 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
   	public ResponseEntity<Ampliacion> getById(@PathVariable("codigo") int id) {
   		Ampliacion ampliacion = aS.getById(id);
  		ResponseEntity<Ampliacion> response = null;
@@ -48,7 +50,8 @@ public class AmpliacionRestController {
  		return response;
  	}
  
- 	@RequestMapping(method = RequestMethod.GET,produces =   MediaType.APPLICATION_JSON_VALUE)
+ 	@RequestMapping(method = RequestMethod.GET,
+ 			produces = MediaType.APPLICATION_JSON_VALUE)
  	public ResponseEntity<List<Ampliacion>> getAll() {
  		List<Ampliacion> ampliaciones = aS.getAll();
  		ResponseEntity<List<Ampliacion>> response = null;
@@ -76,7 +79,10 @@ public class AmpliacionRestController {
  		return response;
  	}*/
  	
- 	@RequestMapping(value="/{codigo}", method = RequestMethod.DELETE)
+ 	@RequestMapping(value="/{codigo}", 
+ 			method = RequestMethod.DELETE, 
+ 			produces = { MediaType.APPLICATION_JSON_VALUE,
+ 					MediaType.APPLICATION_XML_VALUE })
  	public ResponseEntity<Ampliacion> deleteAmpliacion(@PathVariable("codigo") int id){
  		Ampliacion ampliacion = aS.getById(id);
  		ResponseEntity<Ampliacion> response = null;
@@ -88,7 +94,10 @@ public class AmpliacionRestController {
  		}
 		return response;
  	}
-	@RequestMapping(value = "/{codigo}", method = RequestMethod.POST,produces =MediaType.APPLICATION_JSON_VALUE,consumes =MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{codigo}", 
+			method = RequestMethod.PUT,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Ampliacion> update(@PathVariable("codigo") int id,@RequestBody Ampliacion ampliacion){
 		Ampliacion ampli = aS.getById(id);
 		ResponseEntity<Ampliacion> response = null;
@@ -101,8 +110,10 @@ public class AmpliacionRestController {
 		return response;
 	}
 	
-	@RequestMapping( method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+	@RequestMapping( method = RequestMethod.POST,
+			consumes = { MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE }, 
+			produces = { MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> create(@Valid @RequestBody Ampliacion ampliacion, UriComponentsBuilder ucBuilder){
 		ResponseEntity<Void> response=null;
