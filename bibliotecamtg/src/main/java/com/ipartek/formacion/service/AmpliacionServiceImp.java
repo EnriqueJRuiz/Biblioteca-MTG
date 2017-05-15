@@ -71,6 +71,11 @@ public class AmpliacionServiceImp implements AmpliacionService {
 		return ampliacionDAO.getByAmpliacion(codigo);
 	}
 
+	@Override
+	public List<Ampliacion> getampliaciongetByPrincipal(int id) {
+		return ampliacionDAO.getampliaciongetByPrincipal(id);
+	}
+
 
 
 }

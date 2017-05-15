@@ -71,7 +71,7 @@ public class AmpliacionDAOImp implements AmpliacionDAO {
 			ampliacion = template.queryForObject(SQL, 
 					new AmpliacionMapper(),new Object[] { codigo }) ;
 		}catch(EmptyResultDataAccessException e){
-			ampliacion = new Ampliacion();
+			ampliacion = null;
 		}
 		return ampliacion;
 	}
@@ -187,6 +187,18 @@ public class AmpliacionDAOImp implements AmpliacionDAO {
 			LOGGER.trace(e.getMessage());	
 		}
 		return cartas;
+	}
+
+	@Override
+	public List<Ampliacion> getampliaciongetByPrincipal(int codigo) {
+		final String SQL = "CALL ampliaciongetByPrincipal(?);";
+		List<Ampliacion> ampliaciones = null;
+		try{
+			 ampliaciones = template.query(SQL, new AmpliacionMapper());		
+		}catch(EmptyResultDataAccessException e){
+			LOGGER.trace(e.getMessage());	
+		}
+		return ampliaciones;
 	}
 	
 

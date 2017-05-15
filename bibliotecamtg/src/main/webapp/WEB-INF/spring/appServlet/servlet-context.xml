@@ -72,4 +72,14 @@
         <beans:property name="resolveLazily" value="true"/>
     </beans:bean>
     
+    <!-- para tratar con las Exceptions -->
+	<beans:bean id="simpleMappingExceptionResolver" class="com.ipartek.formacion.controller.resolver.MyMappingExceptionResolver">
+        <beans:property name="exceptionMappings">
+            <beans:map>
+                <beans:entry key="Exception" value="generic_error"></beans:entry>
+            </beans:map>
+        </beans:property>
+        <beans:property name="defaultErrorView" value="generic_error"/>
+    </beans:bean>
+    
 </beans:beans>

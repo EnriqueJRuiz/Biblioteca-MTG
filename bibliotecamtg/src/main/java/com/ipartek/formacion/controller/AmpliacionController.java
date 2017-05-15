@@ -11,6 +11,7 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
@@ -24,6 +25,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ipartek.formacion.controller.exception.AmpliacionNoBorradaException;
+import com.ipartek.formacion.controller.exception.AmpliacionNoEncontradoException;
 import com.ipartek.formacion.controller.pojo.Mensaje;
 import com.ipartek.formacion.controller.pojo.MensajeType;
 import com.ipartek.formacion.dbms.persistence.Ampliacion;
@@ -178,24 +182,29 @@ public class AmpliacionController {
 	}
 	
 	@RequestMapping(value="/deleteAmpliacion/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteCarta(@PathVariable("id") int id,RedirectAttributes redirectMap){
+	public ModelAndView deleteCarta(@PathVariable("id") int id,RedirectAttributes redirectMap) throws AmpliacionNoBorradaException, AmpliacionNoEncontradoException{
+
+		
 		String destino = "";
 		String txt="";
 		Mensaje mensaje = null;
-	
+		
 		LOGGER.info(Integer.toString(id));
+		
+		Ampliacion ampliacion=aS.getById(id);
+		if(ampliacion==null){
+			throw new AmpliacionNoEncontradoException(id);
+		}
+		
+		List<Ampliacion> esFK = aS.getampliaciongetByPrincipal(id);
+		if(esFK!=null){
+			throw new AmpliacionNoBorradaException(id);
+		}
+		aS.delete(id);//que no exista o que no se pueda borrar por borrado
 		destino="redirect:/ampliaciones";
 		mav= new ModelAndView(destino);
-		
-		try{
-			aS.delete(id);
-			txt = "La expansión se ha borrado correctamente.";
-			mensaje = new Mensaje(MensajeType.MSG_TYPE_SUCCESS);
-		} catch (Exception e) {
-			LOGGER.info("Se ha lanzadado una excepcion Delete. " + e.toString());
-			mensaje = new Mensaje(MensajeType.MSG_TYPE_DANGER);
-			txt = "Ha habido problemas al borrar la Expansion porque hay cartas asociadas.";
-		} 
+		txt = "La expansión se ha borrado correctamente.";
+		mensaje = new Mensaje(MensajeType.MSG_TYPE_SUCCESS);
 		mensaje.setMsg(txt);
 		redirectMap.addFlashAttribute("mensaje", mensaje);
 		return mav;
@@ -203,11 +212,45 @@ public class AmpliacionController {
 	}
 	
 	@RequestMapping(value="/{id}")
-	public ModelAndView getById(@PathVariable("id") int id){
-		mav = new ModelAndView("ampliacion");
-		mav.addObject("ampliacion",aS.getById(id));
+	public ModelAndView getById(@PathVariable("id") int id) throws AmpliacionNoEncontradoException{
+		Ampliacion ampliacion=aS.getById(id); 
+		if(ampliacion==null){
+			throw new AmpliacionNoEncontradoException(id);
+		}
+		mav.addObject("ampliacion",ampliacion);
 		List<Ampliacion> ampliaciones = aS.cartaAmpliacionGetAll();
 		mav.addObject("listadoampliaciones", ampliaciones);
+		
+		mav = new ModelAndView("ampliacion");
+		return mav;
+	}
+	
+	@ExceptionHandler(AmpliacionNoEncontradoException.class)
+	public ModelAndView handleAmpliacionNoEncontradoExcepcion(HttpServletRequest request, Exception ex){
+		ModelAndView mav = null;
+		LOGGER.error("URL pedida"+request.getRequestURL());
+		LOGGER.error("Excepcion lanzada"+ ex);
+		mav = new ModelAndView();
+		mav.addObject("exception", ex);
+		mav.addObject("url", request.getRequestURL());
+		mav.setViewName("error");
+		return mav;
+	}
+	
+	
+	@ExceptionHandler(AmpliacionNoBorradaException.class)
+	public ModelAndView handleAmpliacionNoBorradaException(HttpServletRequest request, Exception ex,RedirectAttributes redirectMap){
+		String destino = "";
+		String txt="";
+		Mensaje mensaje = null;
+		
+		mensaje = new Mensaje(MensajeType.MSG_TYPE_DANGER);
+		txt = "Ha habido problemas al borrar la Expansion porque hay cartas asociadas.";
+		destino="redirect:/ampliaciones";
+		mav= new ModelAndView(destino);
+		mensaje.setMsg(txt);
+		redirectMap.addFlashAttribute("mensaje", mensaje);
+		
 		return mav;
 	}
 }

@@ -71,4 +71,18 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/ampliaciones/contenido.jsp" />  
    </definition>  
    
+    <definition name="error" extends="my-template">
+   	   <put-attribute name="title" value="error de acceso al curso" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/errors/ampliacionerror.jsp" />  
+   </definition>
+    
+   <definition name="database_error" extends="my-template">
+   	   <put-attribute name="title" value="error de acceso al DDBB" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/errors/database.jsp" />  
+   </definition>
+    
+   <definition name="generic_error" extends="my-template">
+   	   <put-attribute name="title" value="error producido en la aplicacion" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/errors/generic.jsp" />  
+   </definition>
 </tiles-definitions>

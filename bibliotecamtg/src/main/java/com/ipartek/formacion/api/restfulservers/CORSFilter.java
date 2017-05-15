@@ -17,7 +17,7 @@ public class CORSFilter implements Filter  {
 		// TODO Auto-generated method stub
 		
 	}
-
+/*
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -27,10 +27,17 @@ public class CORSFilter implements Filter  {
 			response.setHeader("Access-Control-Max-Age", "3600");
 			response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 			chain.doFilter(req, res);
-	}
+	}*/
 
 	@Override
 	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		
 	}

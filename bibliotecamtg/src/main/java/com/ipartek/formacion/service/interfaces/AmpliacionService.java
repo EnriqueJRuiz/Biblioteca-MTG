@@ -28,5 +28,7 @@ public interface AmpliacionService {
 
 	public Map<Long, Carta> getByAmpliacion(int codigo);
 
+	public List<Ampliacion> getampliaciongetByPrincipal(int id);
+
 	
 }
