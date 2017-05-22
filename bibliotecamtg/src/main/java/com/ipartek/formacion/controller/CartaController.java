@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -74,7 +73,7 @@ public class CartaController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getAll(){
 		mav= new ModelAndView("cartas");
-		Map<Long,Carta> cartas = cS.getAll();
+		List<Carta> cartas = cS.getAll();
 		mav.addObject("listadocartas", cartas);
 		LOGGER.trace("realiza getAll() de cartas");
 		return mav;

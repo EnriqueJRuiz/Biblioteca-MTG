@@ -1,5 +1,7 @@
 package com.ipartek.formacion.dbms.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import com.ipartek.formacion.dbms.dao.interfaces.AmpliacionDAO;
 import com.ipartek.formacion.dbms.mapper.AmpliacionExteractor;
 import com.ipartek.formacion.dbms.mapper.AmpliacionMapper;
 import com.ipartek.formacion.dbms.mapper.CartaExtractor;
+import com.ipartek.formacion.dbms.mapper.CartaMapper;
 import com.ipartek.formacion.dbms.persistence.Ampliacion;
 import com.ipartek.formacion.dbms.persistence.Carta;
 
@@ -190,15 +193,22 @@ public class AmpliacionDAOImp implements AmpliacionDAO {
 	}
 
 	@Override
-	public List<Ampliacion> getampliaciongetByPrincipal(int codigo) {
+	public Boolean cartagetByAmpliacion(int codigo) {
 		final String SQL = "CALL ampliaciongetByPrincipal(?);";
-		List<Ampliacion> ampliaciones = null;
-		try{
-			 ampliaciones = template.query(SQL, new AmpliacionMapper());		
-		}catch(EmptyResultDataAccessException e){
+		boolean valor= false;
+		try {
+			ResultSet rs =  (ResultSet) template.query(SQL, new CartaMapper());	
+			if (rs.next()){
+				valor= false;
+			}else{
+				valor= true;
+			}
+		} catch (SQLException e) {
 			LOGGER.trace(e.getMessage());	
+			e.printStackTrace();
 		}
-		return ampliaciones;
+			
+		return valor;
 	}
 	
 

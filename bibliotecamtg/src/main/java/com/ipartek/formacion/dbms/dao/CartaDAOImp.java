@@ -1,5 +1,7 @@
 package com.ipartek.formacion.dbms.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -81,16 +83,18 @@ public class CartaDAOImp implements CartaDAO {
 	}
 
 	@Override
-	public Map<Long, Carta> getAll() {
+	public List<Carta> getAll() {
 		final String SQL = "CALL cartagetAllOnly();";
 		Map<Long, Carta> cartas = null;
+		List<Carta> listCarta = null;
 		try{
 			 cartas = template.query(SQL, 
-					 new CartaExtractor(), new Object[]{});		
+					 new CartaExtractor(), new Object[]{});	
+			 listCarta = new ArrayList<Carta>(cartas.values());//en la api sino no genera la estructura
 		}catch(EmptyResultDataAccessException e){
 			LOGGER.trace(e.getMessage());	
 		}
-		return cartas;
+		return listCarta;
 	}
 
 	@Override

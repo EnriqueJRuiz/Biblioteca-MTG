@@ -1,5 +1,6 @@
 package com.ipartek.formacion.dbms.dao.interfaces;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ipartek.formacion.dbms.persistence.Carta;;
@@ -10,7 +11,7 @@ public interface CartaDAO extends DAOSetter {
 	
 	public Carta getById(long codigo);
 	
-	public Map<Long, Carta> getAll();
+	public List<Carta> getAll();
 	
 	public Carta update(Carta carta);
 	

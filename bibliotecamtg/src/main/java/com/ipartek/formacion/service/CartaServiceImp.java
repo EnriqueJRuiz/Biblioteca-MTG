@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class CartaServiceImp implements CartaService {
 	}
 
 	@Override
-	public Map<Long, Carta> getAll() {
+	public List<Carta> getAll() {
 		return cartaDAO.getAll();
 	}
 

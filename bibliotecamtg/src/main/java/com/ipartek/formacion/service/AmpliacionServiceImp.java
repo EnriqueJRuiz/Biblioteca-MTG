@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -72,8 +73,8 @@ public class AmpliacionServiceImp implements AmpliacionService {
 	}
 
 	@Override
-	public List<Ampliacion> getampliaciongetByPrincipal(int id) {
-		return ampliacionDAO.getampliaciongetByPrincipal(id);
+	public Boolean cartagetByAmpliacion(int id) {
+		return ampliacionDAO.cartagetByAmpliacion(id);
 	}
 
 

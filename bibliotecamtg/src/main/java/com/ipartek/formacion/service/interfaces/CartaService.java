@@ -11,7 +11,7 @@ public interface CartaService {
 	
 	public Carta getById(long codigo);
 	
-	public Map<Long, Carta> getAll();
+	public List<Carta> getAll();
 	
 	public Carta update(Carta carta);
 	

@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ import com.ipartek.formacion.controller.exception.AmpliacionNoEncontradoExceptio
 import com.ipartek.formacion.controller.pojo.Mensaje;
 import com.ipartek.formacion.controller.pojo.MensajeType;
 import com.ipartek.formacion.dbms.persistence.Ampliacion;
+import com.ipartek.formacion.dbms.persistence.Carta;
 import com.ipartek.formacion.service.interfaces.AmpliacionService;
 
 
@@ -182,29 +184,22 @@ public class AmpliacionController {
 	}
 	
 	@RequestMapping(value="/deleteAmpliacion/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteCarta(@PathVariable("id") int id,RedirectAttributes redirectMap) throws AmpliacionNoBorradaException, AmpliacionNoEncontradoException{
-
-		
+	public ModelAndView deleteCarta(@PathVariable("id") int id,RedirectAttributes redirectMap){
 		String destino = "";
 		String txt="";
 		Mensaje mensaje = null;
-		
 		LOGGER.info(Integer.toString(id));
-		
-		Ampliacion ampliacion=aS.getById(id);
-		if(ampliacion==null){
-			throw new AmpliacionNoEncontradoException(id);
-		}
-		
-		List<Ampliacion> esFK = aS.getampliaciongetByPrincipal(id);
-		if(esFK!=null){
-			throw new AmpliacionNoBorradaException(id);
-		}
-		aS.delete(id);//que no exista o que no se pueda borrar por borrado
 		destino="redirect:/ampliaciones";
 		mav= new ModelAndView(destino);
-		txt = "La expansión se ha borrado correctamente.";
-		mensaje = new Mensaje(MensajeType.MSG_TYPE_SUCCESS);
+		try{
+		aS.delete(id);		
+		 			txt = "La expansión se ha borrado correctamente.";		
+		 			mensaje = new Mensaje(MensajeType.MSG_TYPE_SUCCESS);		
+		 		} catch (Exception e) {		
+		 			LOGGER.info("Se ha lanzadado una excepcion Delete. " + e.toString());		
+		 			mensaje = new Mensaje(MensajeType.MSG_TYPE_DANGER);		
+		 			txt = "Ha habido problemas al borrar la Expansion porque hay cartas asociadas.";		
+		 		} 		
 		mensaje.setMsg(txt);
 		redirectMap.addFlashAttribute("mensaje", mensaje);
 		return mav;
@@ -238,19 +233,5 @@ public class AmpliacionController {
 	}
 	
 	
-	@ExceptionHandler(AmpliacionNoBorradaException.class)
-	public ModelAndView handleAmpliacionNoBorradaException(HttpServletRequest request, Exception ex,RedirectAttributes redirectMap){
-		String destino = "";
-		String txt="";
-		Mensaje mensaje = null;
-		
-		mensaje = new Mensaje(MensajeType.MSG_TYPE_DANGER);
-		txt = "Ha habido problemas al borrar la Expansion porque hay cartas asociadas.";
-		destino="redirect:/ampliaciones";
-		mav= new ModelAndView(destino);
-		mensaje.setMsg(txt);
-		redirectMap.addFlashAttribute("mensaje", mensaje);
-		
-		return mav;
-	}
+
 }

@@ -28,5 +28,5 @@ public interface AmpliacionDAO extends DAOSetter {
 	
 	public Map<Long, Carta> getByAmpliacion(int codigo);
 
-	public List<Ampliacion> getampliaciongetByPrincipal(int codigo);
+	public Boolean cartagetByAmpliacion(int codigo);
 }

@@ -1,7 +1,6 @@
 package com.ipartek.formacion.api.restfulservers.carta;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.ipartek.formacion.dbms.persistence.Carta;
 import com.ipartek.formacion.service.interfaces.CartaService;
 
+@CrossOrigin(origins = "*", maxAge = 3600, methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE })
 @RestController
 @RequestMapping(value = "/api/cartas")
 public class CartaRestController {
@@ -50,14 +52,14 @@ public class CartaRestController {
 	}
 	@RequestMapping(method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
- 	public ResponseEntity<Map<Long, Carta>> getAll() {
- 		Map<Long, Carta> cartas = cS.getAll();
- 		ResponseEntity<Map<Long, Carta>> response = null;
+ 	public ResponseEntity<List<Carta>> getAll() {
+ 		List<Carta> cartas = cS.getAll();
+ 		ResponseEntity<List<Carta>> response = null;
  
  		if (cartas == null || cartas.isEmpty()) {
- 			response = new ResponseEntity<Map<Long, Carta>>(HttpStatus.NO_CONTENT);
+ 			response = new ResponseEntity<List<Carta>>(HttpStatus.NO_CONTENT);
  		} else {
- 			response = new ResponseEntity<Map<Long, Carta>>(cartas, HttpStatus.OK);
+ 			response = new ResponseEntity<List<Carta>>(cartas, HttpStatus.OK);
  		}
  
  		return response;
