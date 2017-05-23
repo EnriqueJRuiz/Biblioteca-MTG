@@ -53,6 +53,20 @@ public class AmpliacionRestController {
  		return response;
  	}
  
+ 	@RequestMapping(value = "/principal",method = RequestMethod.GET,
+ 			produces = MediaType.APPLICATION_JSON_VALUE)
+ 	public ResponseEntity<List<Ampliacion>> ampliacionPricipalGetAll() {
+ 		List<Ampliacion> ampliaciones = aS.ampliacionPricipalGetAll();
+ 		ResponseEntity<List<Ampliacion>> response = null;
+ 
+ 		if (ampliaciones == null || ampliaciones.isEmpty()) {
+ 			response = new ResponseEntity<List<Ampliacion>>(HttpStatus.NO_CONTENT);
+ 		} else {
+ 			response = new ResponseEntity<List<Ampliacion>>(ampliaciones, HttpStatus.OK);
+ 		}
+ 
+ 		return response;
+  	}
  	@RequestMapping(method = RequestMethod.GET,
  			produces = MediaType.APPLICATION_JSON_VALUE)
  	public ResponseEntity<List<Ampliacion>> getAll() {
