@@ -98,8 +98,7 @@ public class AmpliacionRestController {
  	
  	@RequestMapping(value="/{codigo}", 
  			method = RequestMethod.DELETE, 
- 			produces = { MediaType.APPLICATION_JSON_VALUE,
- 					MediaType.APPLICATION_XML_VALUE })
+ 			produces = MediaType.APPLICATION_JSON_VALUE)
  	public ResponseEntity<Ampliacion> deleteAmpliacion(@PathVariable("codigo") int id){
  		Ampliacion ampliacion = aS.getById(id);
  		ResponseEntity<Ampliacion> response = null;
@@ -111,12 +110,11 @@ public class AmpliacionRestController {
  		}
 		return response;
  	}
-	@RequestMapping(value = "/{codigo}", 
-			method = RequestMethod.PUT,
+	@RequestMapping(method = RequestMethod.PUT,
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Ampliacion> update(@PathVariable("codigo") int id,@RequestBody Ampliacion ampliacion){
-		Ampliacion ampli = aS.getById(id);
+	public ResponseEntity<Ampliacion> update(@RequestBody Ampliacion ampliacion){
+		Ampliacion ampli = aS.getById(ampliacion.getCodigo());
 		ResponseEntity<Ampliacion> response = null;
 		if(ampli == null){
 			response= new ResponseEntity<Ampliacion> (HttpStatus.NOT_FOUND);
@@ -128,19 +126,16 @@ public class AmpliacionRestController {
 	}
 	
 	@RequestMapping( method = RequestMethod.POST,
-			consumes = { MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE }, 
-			produces = { MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Void> create(@Valid @RequestBody Ampliacion ampliacion, UriComponentsBuilder ucBuilder){
-		ResponseEntity<Void> response=null;
+			consumes = MediaType.APPLICATION_JSON_VALUE,		
+			produces = MediaType.APPLICATION_JSON_VALUE
+					)
+	public ResponseEntity<Integer> create(@Valid @RequestBody Ampliacion ampliacion, UriComponentsBuilder ucBuilder){
+		ResponseEntity<Integer> response=null;
 		try{
 			Ampliacion aux = aS.create(ampliacion);
-			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(ucBuilder.path("/api/ampliaciones/{codigo}").buildAndExpand(aux.getCodigo()).toUri());
-			response = new ResponseEntity<Void>(headers,HttpStatus.CREATED);
+			response = new ResponseEntity<Integer>(aux.getCodigo(),HttpStatus.CREATED);
 		}catch(Error e){
-			response = new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+			response = new ResponseEntity<Integer>(0,HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		return response;

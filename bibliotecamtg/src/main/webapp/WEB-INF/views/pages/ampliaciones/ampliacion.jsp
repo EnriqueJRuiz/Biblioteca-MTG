@@ -14,7 +14,7 @@
 							<form:hidden path="codigo"/>
 						</c:if>
 						
-						<div class="form-group">
+							<div class="form-group">
 						<form:label path="nombre" for="nombre" cssClass="col-xs-3 form-label"><spring:message code="form.nombre" />:</form:label>
 							<div class=" col-xs-9">
 								<form:input path="nombre" cssErrorClass="form-control alert-danger" cssClass="form-control"  />
@@ -24,7 +24,7 @@
 							<div class=" col-xs-9 col-lg-offset-3">
 								 <form:errors path="nombre" cssClass="col-xs-12 alert alert-danger well-xs" />
 							</div>
-						</div>	
+						</div>
 						
 						<div class="form-group">
 						<form:label path="siglas" for="siglas" cssClass="col-xs-3 form-label"><spring:message code="form.siglas" />:</form:label>

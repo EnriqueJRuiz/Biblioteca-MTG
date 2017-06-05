@@ -100,7 +100,7 @@ public class AmpliacionController {
 	@RequestMapping(value="/addAmpliacion", method = RequestMethod.GET)
 	public ModelAndView addAmpliacion(Model model){
 		model.addAttribute("ampliacion", new Ampliacion());
-		mav= new ModelAndView("ampliacion");
+		mav= new ModelAndView("ampliacionform");
 		List<Ampliacion> ampliaciones = aS.ampliacionPricipalGetAll();
 		mav.addObject("listadoampliaciones", ampliaciones);
 		return mav;
@@ -209,14 +209,11 @@ public class AmpliacionController {
 	@RequestMapping(value="/{id}")
 	public ModelAndView getById(@PathVariable("id") int id) throws AmpliacionNoEncontradoException{
 		Ampliacion ampliacion=aS.getById(id); 
-		if(ampliacion==null){
-			throw new AmpliacionNoEncontradoException(id);
-		}
 		mav.addObject("ampliacion",ampliacion);
 		List<Ampliacion> ampliaciones = aS.cartaAmpliacionGetAll();
 		mav.addObject("listadoampliaciones", ampliaciones);
 		
-		mav = new ModelAndView("ampliacion");
+		mav= new ModelAndView("ampliacionform");
 		return mav;
 	}
 	
